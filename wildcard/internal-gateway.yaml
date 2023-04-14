@@ -1,0 +1,23 @@
+kind: Gateway
+apiVersion: gateway.networking.k8s.io/v1beta1
+metadata:
+  name: internal-http
+  namespace: gateways
+spec:
+  gatewayClassName: gke-l7-rilb
+  listeners:
+  - name: https
+    protocol: HTTPS
+    port: 443
+    tls:
+      mode: Terminate
+      options:
+        networking.gke.io/pre-shared-certs: internal-star-cert
+    allowedRoutes:
+      kinds: 
+        - kind: HTTPRoute
+      namespaces:
+        from: All
+  addresses:
+    - type: NamedAddress
+      value: star-internal-gke-ninja

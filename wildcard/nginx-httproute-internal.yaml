@@ -1,0 +1,15 @@
+kind: HTTPRoute
+apiVersion: gateway.networking.k8s.io/v1beta1
+metadata:
+  name: nginx-internal
+spec:
+  parentRefs:
+  - kind: Gateway
+    name: internal-http
+    namespace: gateways
+  hostnames:
+  - "nginx.internal.gke.ninja"
+  rules:
+  - backendRefs:
+    - name: nginx
+      port: 80
